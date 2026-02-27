@@ -72,7 +72,11 @@ const SignUp = () => {
     setIsLoading(true);
 
     try {
-      const { confirmPassword, ...registrationData } = formData;
+      const { confirmPassword, phone, ...rest } = formData;
+      const registrationData = {
+        ...rest,
+        phoneNumber: phone  // Backend expects "phoneNumber" not "phone"
+      };
       await registerUser(registrationData);
       navigate('/login');
     } catch (err) {
