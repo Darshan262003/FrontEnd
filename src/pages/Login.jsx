@@ -32,8 +32,8 @@ const Login = () => {
       };
       const response = await loginUser(loginData);
       
-      // Check if login was successful and token was stored
-      if (response.status === 200 && response.data.token) {
+      // Check if login was successful (200 or 204) and token was stored
+      if ((response.status === 200 || response.status === 204) && (response.data.token || localStorage.getItem('jwtToken'))) {
         navigate('/dashboard');
       } else {
         setError('Login failed. Please try again.');
