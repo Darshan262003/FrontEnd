@@ -77,8 +77,11 @@ const SignUp = () => {
         ...rest,
         phoneNumber: phone  // Backend expects "phoneNumber" not "phone"
       };
-      await registerUser(registrationData);
-      navigate('/login');
+      const response = await registerUser(registrationData);
+      // Only redirect to login if the registration was successful (status 201)
+      if (response.status === 201) {
+        navigate('/login');
+      }
     } catch (err) {
       setErrors({ submit: err.message || 'Something went wrong. Please try again.' });
     } finally {

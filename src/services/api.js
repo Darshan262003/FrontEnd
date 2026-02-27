@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const registerUser = async (userData) => {
   try {
@@ -21,7 +21,8 @@ export const registerUser = async (userData) => {
       localStorage.setItem('jwtToken', data.token);
     }
     
-    return data;
+    // Return both data and status code so the component can handle different responses
+    return { data, status: response.status };
   } catch (error) {
     throw error;
   }
@@ -48,7 +49,8 @@ export const loginUser = async (credentials) => {
       localStorage.setItem('jwtToken', data.token);
     }
     
-    return data;
+    // Return both data and status code so the component can handle different responses
+    return { data, status: response.status };
   } catch (error) {
     throw error;
   }
