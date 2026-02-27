@@ -26,7 +26,11 @@ const Login = () => {
     setError('');
 
     try {
-      await loginUser(formData);
+      const loginData = {
+        username: formData.email,  // Backend expects "username" (which is email)
+        password: formData.password
+      };
+      await loginUser(loginData);
       navigate('/dashboard');
     } catch (err) {
       setError(err.message || 'Invalid credentials. Please try again.');
