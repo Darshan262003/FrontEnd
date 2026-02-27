@@ -31,7 +31,13 @@ const Login = () => {
         password: formData.password
       };
       const response = await loginUser(loginData);
-      navigate('/dashboard');
+      
+      // Check if login was successful and token was stored
+      if (response.status === 200 && response.data.token) {
+        navigate('/dashboard');
+      } else {
+        setError('Login failed. Please try again.');
+      }
     } catch (err) {
       setError(err.message || 'Invalid credentials. Please try again.');
     } finally {
