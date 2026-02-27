@@ -43,21 +43,10 @@ export const loginUser = async (credentials) => {
       throw new Error(errorData.message || 'Login failed');
     }
 
-    let data = {};
+    const data = await response.json();
     
-    // Handle 204 No Content response
-    if (response.status !== 204) {
-      data = await response.json();
-      if (data.token) {
-        localStorage.setItem('jwtToken', data.token);
-      }
-    } else {
-      // For 204 responses, check if token was set in headers or elsewhere
-      const token = response.headers.get('Authorization')?.replace('Bearer ', '');
-      if (token) {
-        localStorage.setItem('jwtToken', token);
-        data = { token };
-      }
+    if (data.token) {
+      localStorage.setItem('jwtToken', data.token);
     }
     
     // Return both data and status code so the component can handle different responses
